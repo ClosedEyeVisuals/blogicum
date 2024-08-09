@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.shortcuts import redirect
 from django.urls import reverse
 
 MAX_TITLE_LENGTH = 256
