@@ -106,9 +106,6 @@ class Post(BaseModel):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
 
-    def comment_count(self):
-        return self.comment.count()
-
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'pk': self.pk})
 
@@ -122,7 +119,6 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='comment',
         verbose_name='Пост',
     )
     author = models.ForeignKey(
@@ -133,6 +129,7 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ('created_at',)
+        default_related_name = 'comments'
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 
@@ -140,4 +137,4 @@ class Comment(models.Model):
         return self.text
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', kwargs={'pk': self.post.pk})
+        return reverse('blog:post_detail', kwargs={'post_id': self.post.pk})
