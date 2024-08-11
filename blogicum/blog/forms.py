@@ -1,4 +1,4 @@
-from django.forms import DateInput, ModelForm
+from django.forms import DateTimeInput, ModelForm
 
 from .models import Comment, Post, User
 
@@ -24,7 +24,8 @@ class PostForm(ModelForm):
             'image',
         )
         widgets = {
-            'pub_date': DateInput(attrs={'type': 'date'})
+            'pub_date': DateTimeInput(attrs={'type': 'datetime-local'},
+                                      format='%Y-%m-%d %H:%M')
         }
 
 

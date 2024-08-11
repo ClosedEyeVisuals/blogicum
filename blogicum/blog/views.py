@@ -38,13 +38,10 @@ class ProfileDetailView(DetailView, MultipleObjectMixin):
 
     def get_context_data(self, **kwargs):
         author = self.object
-        if self.request.user == author:
-            object_list = get_posts_queryset(
-                manager=author.posts, is_filtered=False
-            )
-        else:
-            object_list = get_posts_queryset(manager=author.posts)
-
+        object_list = get_posts_queryset(
+            manager=author.posts,
+            is_filtered=self.request.user != author
+        )
         context = super(ProfileDetailView, self).get_context_data(
             object_list=object_list,
             **kwargs
