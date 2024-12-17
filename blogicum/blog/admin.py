@@ -10,6 +10,12 @@ class PostInline(admin.StackedInline):
     extra = 0
 
 
+class CommentInLine(admin.StackedInline):
+    model = Comment
+    extra = 0
+
+
+@admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     inlines = (
         PostInline,
@@ -23,6 +29,7 @@ class LocationAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     inlines = (
         PostInline,
@@ -36,7 +43,11 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    inlines = (
+        CommentInLine,
+    )
     list_display = (
         'title',
         'category',
@@ -57,7 +68,14 @@ class PostAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Location, LocationAdmin)
-admin.site.register(Post, PostAdmin)
-admin.site.register(Comment)
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'text',
+        'post',
+        'author'
+    )
+    search_fields = (
+        'author__username',
+        'post__title'
+    )

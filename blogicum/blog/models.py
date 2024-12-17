@@ -107,7 +107,7 @@ class Post(BaseModel):
         verbose_name_plural = 'Публикации'
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', kwargs={'pk': self.pk})
+        return reverse('blog:post_detail', kwargs={'post_id': self.pk})
 
     def __str__(self):
         return self.title
